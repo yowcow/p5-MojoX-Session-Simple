@@ -1,8 +1,6 @@
 package MojoX::Session::Adapter::PSGI;
-use 5.008001;
-use strict;
-use warnings;
-
+use 5.010001;
+use Mojo::Base 'Mojolicious::Sessions';
 our $VERSION = "0.01";
 
 
@@ -14,11 +12,15 @@ __END__
 
 =head1 NAME
 
-MojoX::Session::Adapter::PSGI - It's new $module
+MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
 
 =head1 SYNOPSIS
 
     use MojoX::Session::Adapter::PSGI;
+
+    $app->sessions(MojoX::Session::Adapter::PSGI->new({
+        ...
+    });
 
 =head1 DESCRIPTION
 
@@ -33,7 +35,7 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-yowcow E<lt>yowcow@gmail.comE<gt>
+yowcow E<lt>yowcow@cpan.org<gt>
 
 =cut
 

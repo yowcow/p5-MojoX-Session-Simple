@@ -19,4 +19,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-yowcow <yowcow@gmail.com>
+yowcow <yowcow@cpan.org>
