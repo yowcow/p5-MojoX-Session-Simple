@@ -35,6 +35,19 @@ DISTRIBUTIONS
       strict 0
       version 0.88
       warnings 0
+  Cache-Memory-Simple-1.03
+    pathname: T/TO/TOKUHIROM/Cache-Memory-Simple-1.03.tar.gz
+    provides:
+      Cache::Memory::Simple 1.03
+      Cache::Memory::Simple::Scalar undef
+    requirements:
+      CPAN::Meta 0
+      CPAN::Meta::Prereqs 0
+      ExtUtils::CBuilder 0
+      Module::Build 0.38
+      Time::HiRes 0
+      parent 0
+      perl 5.008001
   Class-Inspector-1.28
     pathname: A/AD/ADAMK/Class-Inspector-1.28.tar.gz
     provides:

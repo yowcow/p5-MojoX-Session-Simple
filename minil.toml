@@ -1,5 +1,5 @@
 name = "MojoX-Session-Adapter-PSGI"
-# badges = ["travis"]
+ badges = ["travis"]
 authority="cpan:YOWCOW"
 
 module_maker="ModuleBuildTiny"
