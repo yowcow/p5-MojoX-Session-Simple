@@ -24,21 +24,16 @@ sub store {
     $session->{new_flash} = $old if $stash->{'mojo.static'};
     delete $session->{new_flash} unless keys %{$session->{new_flash}};
 
-    ## Generate "expires" value from "expiration" if necessary
-    #my $expiration = $session->{expiration} // $self->default_expiration;
-    #my $default = delete $session->{expires};
-    #$session->{expires} = $default || time + $expiration
-    #        if $expiration || $default;
-
+    # Generate "expires" value from "expiration" if necessary
     my $expiration = $session->{expiration} // $self->default_expiration;
-    $session->{expires} = time + $expiration
-            if not defined $session->{expires} and $expiration;
+    my $default = delete $session->{expires};
+    $session->{expires} = $default || time + $expiration
+            if $expiration || $default;
 
-    my $expires    = $session->{expires};
     my $regenerate = delete $session->{regenerate};
     delete $session->{flash} if exists $session->{flash};
 
-    if (defined($expires) && $expires < time) {
+    if (defined($session->{expires}) && $session->{expires} < time) {
         $env->{'psgix.session.options'}{expire} = 1;
     }
     elsif ($regenerate) {
