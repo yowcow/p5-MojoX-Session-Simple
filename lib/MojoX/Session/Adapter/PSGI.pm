@@ -14,9 +14,21 @@ sub store {
     my ($self, $c) = @_;
     my $env = $c->req->env;
 
+    # Make sure session was active
     my $stash = $c->stash;
     return unless my $session = $stash->{'mojo.session'};
     return unless keys %$session || $stash->{'mojo.active_session'};
+
+    # Don't reset flash for static files
+    my $old = delete $session->{flash};
+    $session->{new_flash} = $old if $stash->{'mojo.static'};
+    delete $session->{new_flash} unless keys %{$session->{new_flash}};
+
+    ## Generate "expires" value from "expiration" if necessary
+    #my $expiration = $session->{expiration} // $self->default_expiration;
+    #my $default = delete $session->{expires};
+    #$session->{expires} = $default || time + $expiration
+    #        if $expiration || $default;
 
     my $expiration = $session->{expiration} // $self->default_expiration;
     $session->{expires} = time + $expiration

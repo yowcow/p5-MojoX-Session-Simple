@@ -79,11 +79,15 @@ test_tcp(
             cookie_jar => HTTP::CookieJar->new,
         );
 
+        my $cookie1;
+
         subtest 'Test the first GET /' => sub {
             my $res = $ua->request(GET "http://localhost:$port/");
 
             is $res->content, "";
-            #ok $res->header('set-cookie') =~ qr|myapp_session=([0-9a-f\-]+);|;
+            ok $res->header('set-cookie') =~ qr|myapp_session=([0-9a-f\-]+);|;
+
+            $cookie1 = $1;
         };
 
         subtest 'Test POST /login' => sub {
@@ -135,7 +139,29 @@ test_tcp(
             is $res1->content, 'HogeFuga';
             is $res2->content, '';
         };
+
+        subtest 'Test GET /static_file.html does not erase flash' => sub {
+            # Set 'HogeFuga' in flash
+            $ua->request(POST "http://localhost:$port/flash");
+
+            {   # Request a static file
+                my $res = $ua->request(GET "http://localhost:$port/static_file.html");
+
+                is $res->content, "Hello, world.\n";
+            };
+
+            my $res1 = $ua->request(GET "http://localhost:$port/flash");
+            my $res2 = $ua->request(GET "http://localhost:$port/flash");
+
+            is $res1->content, 'HogeFuga', 'flash content remains after static file dispatch';
+            is $res2->content, '', 'flash content expires after non-static dispatch';
+        };
     },
 );
 
 done_testing;
+
+__DATA__
+
+@@ static_file.html
+Hello, world.
