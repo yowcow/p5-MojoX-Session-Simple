@@ -6,8 +6,22 @@ our $VERSION = "0.01";
 sub load {
     my ($self, $c) = @_;
     my $session = $c->req->env->{'psgix.session'};
-    $session->{flash} = delete $session->{new_flash} if exists $session->{new_flash};
     $c->stash->{'mojo.session'} = $session;
+
+    ## "expiration" value is inherited
+    my $expiration = $session->{expiration} // $self->default_expiration;
+
+    my $remove_session = sub { delete @$session{ keys %$session } };
+
+    $remove_session->() and return
+            if !(my $expires = delete $session->{expires}) && $expiration;
+    $remove_session->() and return
+            if defined $expires && $expires <= time;
+
+    my $stash = $c->stash;
+    $remove_session->() and return
+            unless $stash->{'mojo.active_session'} = keys %$session;
+    $session->{flash} = delete $session->{new_flash} if $session->{new_flash};
 }
 
 sub store {
@@ -33,7 +47,7 @@ sub store {
     my $regenerate = delete $session->{regenerate};
     delete $session->{flash} if exists $session->{flash};
 
-    if (defined($session->{expires}) && $session->{expires} < time) {
+    if (defined($session->{expires}) && $session->{expires} <= time) {
         $env->{'psgix.session.options'}{expire} = 1;
     }
     elsif ($regenerate) {
@@ -55,7 +69,7 @@ MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
     use MojoX::Session::Adapter::PSGI;
 
     my $sessions = MojoX::Session::Adapter::PSGI->new({
-        ...
+        default_expiration => 24 * 60 * 60, # 24 hours
     });
 
     $app->sessions($sessions);

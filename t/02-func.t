@@ -16,7 +16,7 @@ use Test::TCP;
 
 app->secrets([qw( hoge )]);
 app->sessions(
-    MojoX::Session::Adapter::PSGI->new
+    MojoX::Session::Adapter::PSGI->new,
 );
 
 get '/' => sub {
