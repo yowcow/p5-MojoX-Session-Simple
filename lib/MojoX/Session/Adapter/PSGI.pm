@@ -66,17 +66,37 @@ MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
 
 =head1 SYNOPSIS
 
+    # Replace default session manager
     use MojoX::Session::Adapter::PSGI;
 
     my $sessions = MojoX::Session::Adapter::PSGI->new({
         default_expiration => 24 * 60 * 60, # 24 hours
     });
 
-    $app->sessions($sessions);
+    $mojo_app->sessions($sessions);
+
+    # In app.psgi, build app to use Plack::Middleware::Session::Simple
+    use Mojolicious::Lite;
+    use Plack::Builder;
+
+    build {
+        enable 'Session::Simple,
+            store => Cache::Memcached::Fast->new( ... ),
+            cookie_name => 'my-test-app-session';
+
+        app->start;
+    };
 
 =head1 DESCRIPTION
 
-MojoX::Session::Adapter::PSGI is ...
+MojoX::Session::Adapter::PSGI enables L<Mojolicious> app to load/store
+session through C<psgix.session> key in the C<$env> without making
+changes to existing controller codes.
+
+The simplest usage is to build your Mojolicious app to use
+L<Plack::Middleware::Session::Simple> through L<Plack::Builder>,
+and this adapter will do the bridge between C<psgix.session> and
+L<Mojolicious::Sessions>.
 
 =head1 METHODS
 
