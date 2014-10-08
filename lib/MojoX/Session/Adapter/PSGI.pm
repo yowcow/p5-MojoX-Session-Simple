@@ -38,8 +38,6 @@ sub store {
     my $regenerate = delete $session->{regenerate};
     delete $session->{flash} if exists $session->{flash};
 
-    #map { $env->{'psgix.session'}{$_} = $session->{$_} } keys %$session;
-
     if (defined($expires) && $expires < time) {
         $env->{'psgix.session.options'}{expire} = 1;
     }

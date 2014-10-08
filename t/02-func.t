@@ -68,47 +68,35 @@ my $app = builder {
     Mojo::Server::PSGI->new({ app => Test::Mojo->new->app })->to_psgi_app;
 };
 
+my $server = sub {
+    my $port = shift;
+    Plack::Loader->load('Standalone', port => $port)->run($app);
+};
+
+# Simple login and logout
 test_tcp(
-    server => sub {
-        my $port = shift;
-        Plack::Loader->load('Standalone', port => $port)->run($app);
-    },
+    server => $server,
     client => sub {
         my $port = shift;
         my $ua = Plack::LWPish->new(
             cookie_jar => HTTP::CookieJar->new,
         );
 
-        my $cookie1;
-
         subtest 'Test the first GET /' => sub {
             my $res = $ua->request(GET "http://localhost:$port/");
 
             is $res->content, "";
             ok $res->header('set-cookie') =~ qr|myapp_session=([0-9a-f\-]+);|;
-
-            $cookie1 = $1;
         };
 
         subtest 'Test POST /login' => sub {
             my $res = $ua->request(POST "http://localhost:$port/login", { });
 
             is $res->content, 'OK';
+            is $res->header('set-cookie'), undef, 'no set-cookie header if session exists';
         };
 
         subtest 'Test GET / after login' => sub {
-            my $res = $ua->request(GET "http://localhost:$port/");
-
-            is $res->content, "Hoge";
-        };
-
-        subtest 'Test POST /reload regenerates session' => sub {
-            my $res = $ua->request(POST "http://localhost:$port/reload", { });
-
-            is $res->content, 'OK';
-        };
-
-        subtest 'Test GET / after reload' => sub {
             my $res = $ua->request(GET "http://localhost:$port/");
 
             is $res->content, "Hoge";
@@ -125,6 +113,87 @@ test_tcp(
 
             is $res->content, "";
         };
+    },
+);
+
+# Session 'sid' Regeneration
+test_tcp(
+    server => $server,
+    client => sub {
+        my $port = shift;
+        my $ua = Plack::LWPish->new(
+            cookie_jar => HTTP::CookieJar->new,
+        );
+
+        my $cookie;
+
+        subtest 'Test POST /login to create session' => sub {
+            my $res = $ua->request(POST "http://localhost:$port/login");
+
+            ok $res->header('set-cookie') =~ /myapp_session=(.+?);/;
+
+            $cookie = $1;
+        };
+
+        subtest 'Test POST /reload regenerates session' => sub {
+            my $res = $ua->request(POST "http://localhost:$port/reload", { });
+
+            is $res->content, 'OK';
+            ok $res->header('set-cookie') =~ /myapp_session=(.+?);/;
+            isnt $1, $cookie, 'sid was regenerated';
+        };
+
+        subtest 'Test GET / after reload' => sub {
+            my $res = $ua->request(GET "http://localhost:$port/");
+
+            is $res->content, "Hoge";
+        };
+    },
+);
+
+# Secure login with sid regeneration
+test_tcp(
+    server => $server,
+    client => sub {
+        my $port = shift;
+        my $ua = Plack::LWPish->new(
+            cookie_jar => HTTP::CookieJar->new,
+        );
+
+        my $cookie;
+
+        subtest 'Test GET / to start up initial session' => sub {
+            my $res = $ua->request(GET "http://localhost:$port/");
+
+            ok $res->header('set-cookie') =~ /myapp_session=(.+?);/;
+
+            $cookie = $1;
+        };
+
+        subtest 'Test POST /secure_login' => sub {
+            my $res = $ua->request(POST "http://localhost:$port/secure_login");
+
+            ok $res->header('set-cookie') =~ /myapp_session=(.+?);/;
+            isnt $1, $cookie, 'sid was regenerated';
+        };
+
+        subtest 'Test GET / after login' => sub {
+            my $res = $ua->request(GET "http://localhost:$port/");
+
+            is $res->content, 'Fuga';
+            is $res->header('set-cookie'), undef;
+        };
+    },
+);
+
+# Flash handling
+test_tcp(
+    server => $server,
+    client => sub {
+        my $port = shift;
+        my $ua = Plack::LWPish->new(
+            cookie_jar => HTTP::CookieJar->new,
+        );
 
         subtest 'Test POST /flash' => sub {
             my $res = $ua->request(POST "http://localhost:$port/flash");
