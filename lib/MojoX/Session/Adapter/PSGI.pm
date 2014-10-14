@@ -75,7 +75,8 @@ MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
 
     $mojo_app->sessions($sessions);
 
-    # In app.psgi, build app to use Plack::Middleware::Session::Simple
+    # In app.psgi, build app to use Plack::Middleware::Session or similar.
+    # As an example, you may choose Plack::Middleware::Session::Simple
     use Mojolicious::Lite;
     use Plack::Builder;
 
@@ -91,18 +92,43 @@ MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
 
 MojoX::Session::Adapter::PSGI enables L<Mojolicious> app to load/store
 session through C<psgix.session> key in the C<$env> without making
-changes to existing controller codes.
+changes to your existing controller codes.
 
 The simplest usage is to build your Mojolicious app to use
 L<Plack::Middleware::Session::Simple> through L<Plack::Builder>,
 and this adapter will do the bridge between C<psgix.session> and
 L<Mojolicious::Sessions>.
 
+=head1 ATTRIBUTES
+
+L<MojoX::Session::Adapter::PSGI> uses the following attributes
+implemented on L<Mojolicious::Sessions>.
+
+=head2 default_expiration
+
+For details, see L<Mojolicious::Sessions>.
+
 =head1 METHODS
 
 =head2 load
 
+Load session data from C<$env->{'psgix.session'}> into C<$c->stash->{'mojo.session'}>.
+Session data will be deleted if the session is expired.
+
 =head2 store
+
+Store session data from C<$c->stash->{'mojo.session'}> into C<$env->{'psgix.session'}>.
+You may regenerate session ID by setting the following flag in session data:
+
+=over 4
+
+=item * regenerate
+
+L<MojoX::Session::Adapter::PSGI> sets C<$env->{'psgix.option'}{change_id} = 1> when:
+
+    $c->session({ regenerate => 1 });
+
+=back
 
 =head1 LICENSE
 
