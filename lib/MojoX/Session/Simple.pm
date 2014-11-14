@@ -104,19 +104,19 @@ For details, see L<Mojolicious::Sessions>.
 
 =head2 load
 
-Load session data from C<$env->{'psgix.session'}> into C<$c->stash->{'mojo.session'}>.
+Load session data from C<$env-E<gt>{'psgix.session'}> into C<$c-E<gt>stash-E<gt>{'mojo.session'}>.
 Session data will be deleted if the session is expired.
 
 =head2 store
 
-Store session data from C<$c->stash->{'mojo.session'}> into C<$env->{'psgix.session'}>.
+Store session data from C<$c-E<gt>stash-E<gt>{'mojo.session'}> into C<$env-E<gt>{'psgix.session'}>.
 You may regenerate session ID by setting the following flag in session data:
 
 =over 4
 
 =item * regenerate
 
-L<MojoX::Session::Simple> sets C<$env->{'psgix.option'}{change_id} = 1> when:
+L<MojoX::Session::Simple> sets C<$env-E<gt>{'psgix.option'}{change_id} = 1> when:
 
     $c->session({ regenerate => 1 });
 
@@ -131,7 +131,7 @@ it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
-yowcow E<lt>yowcow@cpan.org<gt>
+yowcow E<lt>yowcow@cpan.orgE<gt>
 
 =cut
 
