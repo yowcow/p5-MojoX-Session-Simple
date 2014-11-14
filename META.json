@@ -43,6 +43,7 @@
       "runtime" : {
          "requires" : {
             "Mojolicious" : "0",
+            "Plack::Middleware::Session::Simple" : "0",
             "perl" : "5.010001"
          }
       },
@@ -51,7 +52,6 @@
             "Cache::Memory::Simple" : "0",
             "HTTP::CookieJar" : "0",
             "HTTP::Request::Common" : "0",
-            "Plack::Middleware::Session::Simple" : "0",
             "Test::More" : "0.98",
             "Test::Pretty" : "0",
             "Test::TCP" : "0"
