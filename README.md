@@ -43,17 +43,17 @@ For details, see [Mojolicious::Sessions](https://metacpan.org/pod/Mojolicious::S
 
 ## load
 
-Load session data from `$env-`{'psgix.session'}> into `$c-`stash->{'mojo.session'}>.
+Load session data from `$env->{'psgix.session'}` into `$c->stash->{'mojo.session'}`.
 Session data will be deleted if the session is expired.
 
 ## store
 
-Store session data from `$c-`stash->{'mojo.session'}> into `$env-`{'psgix.session'}>.
+Store session data from `$c->stash->{'mojo.session'}` into `$env->{'psgix.session'}`.
 You may regenerate session ID by setting the following flag in session data:
 
 - regenerate
 
-    [MojoX::Session::Simple](https://metacpan.org/pod/MojoX::Session::Simple) sets `$env-`{'psgix.option'}{change\_id} = 1> when:
+    [MojoX::Session::Simple](https://metacpan.org/pod/MojoX::Session::Simple) sets `$env->{'psgix.option'}{change_id} = 1` when:
 
         $c->session({ regenerate => 1 });
 
@@ -66,4 +66,4 @@ it under the same terms as Perl itself.
 
 # AUTHOR
 
-yowcow <yowcow@cpan.org<gt>
+yowcow <yowcow@cpan.org>

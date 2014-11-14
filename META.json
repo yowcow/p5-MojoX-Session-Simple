@@ -1,7 +1,7 @@
 {
    "abstract" : "Plack::Middleware::Session::Simple adapter for Mojolicious",
    "author" : [
-      "yowcow <yowcow@cpan.org<gt>"
+      "yowcow <yowcow@cpan.org>"
    ],
    "dynamic_config" : 0,
    "generated_by" : "Minilla/v2.2.0, CPAN::Meta::Converter version 2.142060",
