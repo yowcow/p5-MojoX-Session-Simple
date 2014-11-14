@@ -79,7 +79,7 @@ MojoX::Session::Simple - Plack::Middleware::Session::Simple adapter for Mojolici
     use Plack::Builder;
 
     build {
-        enable 'Session::Simple,
+        enable 'Session::Simple',
             store => Cache::Memcached::Fast->new( ... ),
             cookie_name => 'my-test-app-session';
 
