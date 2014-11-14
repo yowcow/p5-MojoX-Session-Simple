@@ -1,4 +1,4 @@
-package MojoX::Session::Adapter::PSGI;
+package MojoX::Session::Simple;
 use 5.010001;
 use Mojo::Base 'Mojolicious::Sessions';
 our $VERSION = "0.01";
@@ -62,22 +62,20 @@ __END__
 
 =head1 NAME
 
-MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
+MojoX::Session::Simple - Plack::Middleware::Session::Simple adapter for Mojolicious
 
 =head1 SYNOPSIS
 
+    use MojoX::Session::Simple;
+
     # Replace default session manager
-    use MojoX::Session::Adapter::PSGI;
+    $mojo_app->sessions(
+        MojoX::Session::Simple->new({
+            default_expiration => 24 * 60 * 60, # 24 hours
+        })
+    );
 
-    my $sessions = MojoX::Session::Adapter::PSGI->new({
-        default_expiration => 24 * 60 * 60, # 24 hours
-    });
-
-    $mojo_app->sessions($sessions);
-
-    # In app.psgi, build app to use Plack::Middleware::Session or similar.
-    # As an example, you may choose Plack::Middleware::Session::Simple
-    use Mojolicious::Lite;
+    # In app.psgi, build mojo app to enable Plack::Middleware::Session::Simple.
     use Plack::Builder;
 
     build {
@@ -85,24 +83,18 @@ MojoX::Session::Adapter::PSGI - PSGI session adapter for Mojolicious
             store => Cache::Memcached::Fast->new( ... ),
             cookie_name => 'my-test-app-session';
 
-        app->start;
+        $mojo_app->start;
     };
 
 =head1 DESCRIPTION
 
-MojoX::Session::Adapter::PSGI enables L<Mojolicious> app to load/store
-session through C<psgix.session> key in the C<$env> without making
-changes to your existing controller codes.
-
-The simplest usage is to build your Mojolicious app to use
-L<Plack::Middleware::Session::Simple> through L<Plack::Builder>,
-and this adapter will do the bridge between C<psgix.session> and
-L<Mojolicious::Sessions>.
+MojoX::Session::Simple provides compatibility to your L<Mojolicious> app to
+transparently use L<Plack::Middleware::Session:::Simple> for session management
+with no, or little, changes to existing controllers.
 
 =head1 ATTRIBUTES
 
-L<MojoX::Session::Adapter::PSGI> uses the following attributes
-implemented on L<Mojolicious::Sessions>.
+L<MojoX::Session::Simple> uses the following attributes implemented to L<Mojolicious::Sessions>.
 
 =head2 default_expiration
 
@@ -124,7 +116,7 @@ You may regenerate session ID by setting the following flag in session data:
 
 =item * regenerate
 
-L<MojoX::Session::Adapter::PSGI> sets C<$env->{'psgix.option'}{change_id} = 1> when:
+L<MojoX::Session::Simple> sets C<$env->{'psgix.option'}{change_id} = 1> when:
 
     $c->session({ regenerate => 1 });
 

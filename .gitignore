@@ -27,4 +27,4 @@ cover_db/
 
 MYMETA.*
 
-/MojoX-Session-Adapter-PSGI-*
+/MojoX-Session-Simple-*

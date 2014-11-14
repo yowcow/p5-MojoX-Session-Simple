@@ -5,7 +5,7 @@ use HTTP::CookieJar;
 use HTTP::Request::Common;
 use Mojolicious::Lite;
 use Mojo::Server::PSGI;
-use MojoX::Session::Adapter::PSGI;
+use MojoX::Session::Simple;
 use Plack::Builder;
 use Plack::Loader;
 use Plack::LWPish;
@@ -16,7 +16,7 @@ use Test::TCP;
 
 app->secrets([qw( hoge )]);
 app->sessions(
-    MojoX::Session::Adapter::PSGI->new({
+    MojoX::Session::Simple->new({
         default_expiration => 2,
     }),
 );
