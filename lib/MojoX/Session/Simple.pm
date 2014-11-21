@@ -14,13 +14,13 @@ sub load {
     my $remove_session = sub { delete @$session{ keys %$session } };
 
     $remove_session->() and return
-            if !(my $expires = delete $session->{expires}) && $expiration;
+        if !(my $expires = delete $session->{expires}) && $expiration;
     $remove_session->() and return
-            if defined $expires && $expires <= time;
+        if defined $expires && $expires <= time;
 
     my $stash = $c->stash;
     $remove_session->() and return
-            unless $stash->{'mojo.active_session'} = keys %$session;
+        unless $stash->{'mojo.active_session'} = keys %$session;
     $session->{flash} = delete $session->{new_flash} if $session->{new_flash};
 }
 
@@ -36,13 +36,13 @@ sub store {
     # Don't reset flash for static files
     my $old = delete $session->{flash};
     $session->{new_flash} = $old if $stash->{'mojo.static'};
-    delete $session->{new_flash} unless keys %{$session->{new_flash}};
+    delete $session->{new_flash} unless keys %{ $session->{new_flash} };
 
     # Generate "expires" value from "expiration" if necessary
     my $expiration = $session->{expiration} // $self->default_expiration;
     my $default = delete $session->{expires};
     $session->{expires} = $default || time + $expiration
-            if $expiration || $default;
+        if $expiration || $default;
 
     my $regenerate = delete $session->{regenerate};
     delete $session->{flash} if exists $session->{flash};
