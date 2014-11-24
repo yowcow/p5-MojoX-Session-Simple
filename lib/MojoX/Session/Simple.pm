@@ -1,7 +1,7 @@
 package MojoX::Session::Simple;
 use 5.010001;
 use Mojo::Base 'Mojolicious::Sessions';
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 sub load {
     my ($self, $c) = @_;
