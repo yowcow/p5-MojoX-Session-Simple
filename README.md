@@ -28,7 +28,7 @@ MojoX::Session::Simple - Plack::Middleware::Session::Simple adapter for Mojolici
 # DESCRIPTION
 
 MojoX::Session::Simple provides compatibility to your [Mojolicious](https://metacpan.org/pod/Mojolicious) app to
-transparently use [Plack::Middleware::Session:::Simple](https://metacpan.org/pod/Plack::Middleware::Session:::Simple) for session management
+transparently use [Plack::Middleware::Session::Simple](https://metacpan.org/pod/Plack::Middleware::Session::Simple) for session management
 with no, or little, changes to existing controllers.
 
 # ATTRIBUTES

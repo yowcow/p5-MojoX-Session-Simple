@@ -70,9 +70,11 @@
          "web" : "https://github.com/yowcow/p5-MojoX-Session-Simple"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_authority" : "cpan:YOWCOW",
    "x_contributors" : [
+      "Olaf Alders <olaf@wundersolutions.com>",
+      "yowcow <yowcow@users.noreply.github.com>",
       "yowcow <yowcow@gmail.com>"
    ]
 }
