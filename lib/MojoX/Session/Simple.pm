@@ -89,7 +89,7 @@ MojoX::Session::Simple - Plack::Middleware::Session::Simple adapter for Mojolici
 =head1 DESCRIPTION
 
 MojoX::Session::Simple provides compatibility to your L<Mojolicious> app to
-transparently use L<Plack::Middleware::Session:::Simple> for session management
+transparently use L<Plack::Middleware::Session::Simple> for session management
 with no, or little, changes to existing controllers.
 
 =head1 ATTRIBUTES
