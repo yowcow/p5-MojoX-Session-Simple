@@ -14,7 +14,6 @@ use Test::More;
 use Test::Pretty;
 use Test::TCP;
 
-app->secrets([qw( hoge )]);
 app->sessions(
     MojoX::Session::Simple->new,
 );

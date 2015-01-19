@@ -1,7 +1,7 @@
 requires 'perl', '5.010001';
 
-requires 'Mojolicious';
-requires 'Plack::Middleware::Session::Simple';
+requires 'Mojolicious' => '>= 4.0';
+requires 'Plack::Middleware::Session::Simple' => '>= 0.01';
 
 on 'test' => sub {
     requires 'Cache::Memory::Simple';
