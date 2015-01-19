@@ -4,7 +4,7 @@
       "yowcow <yowcow@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.2.0, CPAN::Meta::Converter version 2.142060",
+   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -42,8 +42,8 @@
       },
       "runtime" : {
          "requires" : {
-            "Mojolicious" : "0",
-            "Plack::Middleware::Session::Simple" : "0",
+            "Mojolicious" : "4.0",
+            "Plack::Middleware::Session::Simple" : "0.01",
             "perl" : "5.010001"
          }
       },
@@ -70,7 +70,7 @@
          "web" : "https://github.com/yowcow/p5-MojoX-Session-Simple"
       }
    },
-   "version" : "0.02",
+   "version" : "0.03",
    "x_authority" : "cpan:YOWCOW",
    "x_contributors" : [
       "Olaf Alders <olaf@wundersolutions.com>",
