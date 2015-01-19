@@ -1,6 +1,8 @@
-Revision history for Perl extension MojoX-Session-Adapter-PSGI
+Revision history for Perl extension MojoX-Session-Simple
 
 {{$NEXT}}
+
+    - Fixed module name in "Changes" (@reneeb)
 
 0.03 2015-01-19T12:05:35Z
 
