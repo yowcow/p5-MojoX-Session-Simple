@@ -54,7 +54,7 @@
             "HTTP::Request::Common" : "0",
             "Test::More" : "0.98",
             "Test::Pretty" : "0",
-            "Test::TCP" : "0"
+            "Test::TCP" : "2.07"
          }
       }
    },
