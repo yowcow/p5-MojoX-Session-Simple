@@ -7,8 +7,8 @@ on 'test' => sub {
     requires 'Cache::Memory::Simple';
     requires 'HTTP::CookieJar';
     requires 'HTTP::Request::Common';
-    requires 'Test::More', '0.98';
+    requires 'Test::More' => '>= 0.98';
     requires 'Test::Pretty';
-    requires 'Test::TCP';
+    requires 'Test::TCP' => '>= 2.07';
 };
 

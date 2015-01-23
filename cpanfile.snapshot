@@ -646,17 +646,17 @@ DISTRIBUTIONS
       Test::Builder::Module 0
       Test::More 0.88
       perl 5.008_001
-  Test-TCP-2.06
-    pathname: T/TO/TOKUHIROM/Test-TCP-2.06.tar.gz
+  Test-TCP-2.07
+    pathname: T/TO/TOKUHIROM/Test-TCP-2.07.tar.gz
     provides:
       Net::EmptyPort undef
-      Test::TCP 2.06
+      Test::TCP 2.07
       Test::TCP::CheckPort undef
     requirements:
       ExtUtils::MakeMaker 6.64
       IO::Socket::INET 0
       Test::More 0
-      Test::SharedFork 0.19
+      Test::SharedFork 0.29
       Time::HiRes 0
       perl 5.008001
   Try-Tiny-0.22
