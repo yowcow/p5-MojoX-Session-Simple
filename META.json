@@ -4,7 +4,7 @@
       "yowcow <yowcow@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.143240",
+   "generated_by" : "Minilla/v3.0.2, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -74,7 +74,8 @@
    "x_authority" : "cpan:YOWCOW",
    "x_contributors" : [
       "Olaf Alders <olaf@wundersolutions.com>",
-      "yowcow <yowcow@users.noreply.github.com>",
-      "yowcow <yowcow@gmail.com>"
-   ]
+      "yowcow <yowcow@gmail.com>",
+      "Yoko OYAMA <yowcow@users.noreply.github.com>"
+   ],
+   "x_serialization_backend" : "JSON::PP version 2.27400"
 }
